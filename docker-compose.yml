@@ -30,4 +30,4 @@ services:
       - strapi
 
 # volumes:
-#   strapi-app: # Isso não parece ser necessário neste contexto
+  # strapi-app: # Isso não parece ser necessário neste contexto
