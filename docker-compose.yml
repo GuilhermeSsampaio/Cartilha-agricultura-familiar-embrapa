@@ -1,18 +1,16 @@
 version: '3.1'
 services:
-  # postgres:
-  #   image: postgres:latest
-  #   restart: always
-  #   env_file: .env
-  #   container_name: meu-postgres
-  #   environment:
-  #     POSTGRES_DB: ${DATABASE_NAME}
-  #     POSTGRES_USER: ${DATABASE_USERNAME}
-  #     POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
+  postgres:
+    image: postgres:latest
+    container_name: meu-postgres-container
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data # Mapeia o diretório de dados do PostgreSQL
 
   strapi:
     build:
@@ -20,16 +18,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "1337:1337"
-  nextjs:
-      build:
-        context: ./front # Substitua pelo caminho para o seu código-fonte do Next.js
-        dockerfile: Dockerfile
-      container_name: meu-nextjs
-      ports:
-        - "3000:3000"
-      depends_on:
-        - strapi
 
-volumes:
-    # postgres-data:
-    strapi-app:
+  nextjs:
+    build:
+      context: ./front # Substitua pelo caminho para o seu código-fonte do Next.js
+      dockerfile: Dockerfile
+    container_name: meu-nextjs
+    ports:
+      - "3000:3000"
+    depends_on:
+      - strapi
+
+# volumes:
+#   strapi-app: # Isso não parece ser necessário neste contexto
