@@ -14,21 +14,33 @@ module.exports = ({env}) => ({
       },
     },
   },
+  // email: {
+  //   config: {
+  //     provider: 'nodemailer',
+  //     providerOptions: {
+  //       host: env('SMTP_HOST'),
+  //       port: env('SMTP_PORT'),
+  //       auth: {
+  //         user: env('SMTP_USERNAME'),
+  //         pass: env('SMTP_PASSWORD'),
+  //       },
+  //       // ... any custom nodemailer options
+  //     },
+  //     settings: {
+  //       defaultFrom: 'no-reply@strapi.io',
+  //       defaultReplyTo: 'no-reply@strapi.io',
+  //     },
+  //   },
+  // },
   email: {
     config: {
-      provider: 'nodemailer',
+      provider: 'sendgrid',
       providerOptions: {
-        host: env('SMTP_HOST'),
-        port: env('SMTP_PORT'),
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-        // ... any custom nodemailer options
+        apiKey: env('SENDGRID_API_KEY'),
       },
       settings: {
-        defaultFrom: 'no-reply@strapi.io',
-        defaultReplyTo: 'no-reply@strapi.io',
+        defaultFrom: 'guilherme.sampaio@estudante.ifms.edu.br',
+        defaultReplyTo: 'guilherme.sampaio@estudante.ifms.edu.br',
       },
     },
   },
