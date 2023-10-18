@@ -31,5 +31,3 @@ services:
     depends_on:
       - strapi
 
-# volumes:
-  # strapi-app: # Isso não parece ser necessário neste contexto
