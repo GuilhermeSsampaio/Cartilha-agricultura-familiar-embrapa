@@ -27,7 +27,7 @@ export default {
           primary100: '#ADD8E6	',//button select color
           primary200: '#ADD8E6',//background color
           primary500: '#ac73e6',
-          primary600: '#191970',//text color barra esquerda
+          primary600: '#191970',//text color barra esqueda
           primary700: '#191970',//border color
           danger700: '#b72b1a'
         },
@@ -39,7 +39,7 @@ export default {
           primary100: '#ADD8E6	',//button select color
           primary200: '#ADD8E6',//background color
           primary500: '#ac73e6',
-          primary600: '#191970',//text color barra esquerda
+          primary600: '#191970',//text color barra esqueda
           primary700: '#191970',//border color
           danger700: '#b72b1a'
         },

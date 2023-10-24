@@ -22,6 +22,11 @@
     },
     "subtitle": {
       "type": "string"
+    },
+    "referencias": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.referencias"
     }
   }
 }

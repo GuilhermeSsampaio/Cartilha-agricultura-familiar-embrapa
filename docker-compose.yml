@@ -20,6 +20,8 @@ services:
       - "1337:1337"
     depends_on:
       - banco
+    volumes:
+      - ./data/strapi:/srv/app
 
   nextjs:
     build:
