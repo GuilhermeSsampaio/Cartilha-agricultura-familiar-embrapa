@@ -99,7 +99,10 @@ const TextCapitulos = ({ lista, activeTitle, setActiveTitle }) => {
       switch (block.type) {
         case 'header':
           const anchor = block.data.text.replace(/ /g, "_"); // Criar âncora
-          htmlContent += `<h${block.data.level} class="nome-instituicao" id='${anchor}'>${block.data.text}</h${block.data.level}>`;
+          //mudei pra não bugar o titulo verde
+          // htmlContent += `<h${blo1ck.data.level} class="nome-instituicao" id='${anchor}'>${block.data.text}</h$1>`;
+          htmlContent += `<h4 class="nome-instituicao" id='${anchor}'>${block.data.text}</h4>`;
+
           break;
         case 'paragraph':
           htmlContent += `<p class="paragrafo">${block.data.text}</p>`;
