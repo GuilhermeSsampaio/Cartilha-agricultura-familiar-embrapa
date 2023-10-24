@@ -17,7 +17,7 @@ const TextCapitulos = ({ lista, activeTitle, setActiveTitle }) => {
         const refBlocks = JSON.parse(refs[0].description).blocks;
         extractedReferences.push(refBlocks);
 
-        console.log(refBlocks);
+        // console.log(refBlocks);
       }
       blocks.forEach((block) => {
         if (block.type === 'header') {
@@ -27,7 +27,7 @@ const TextCapitulos = ({ lista, activeTitle, setActiveTitle }) => {
     });
     setHeaderBlocks(extractedHeaderBlocks);
     setReferences(extractedReferences);
-    console.log("headerBlocks:", extractedHeaderBlocks);
+    // console.log("headerBlocks:", extractedHeaderBlocks);
   }, [lista]);
   
 
