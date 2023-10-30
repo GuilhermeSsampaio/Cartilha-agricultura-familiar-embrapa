@@ -24,11 +24,8 @@ export const Autores = () => {
             if (response.ok) {
                 const json = await response.json();
                 const data = json.data;
-                // Ordenar os autores por ID (do menor para o maior)
-                const sortedData = data.sort((a, b) => a.id - b.id);
-                
-                console.log('API response:', sortedData);
-                setData(sortedData);
+                console.log('API response:', data);
+                setData(data);
             } else {
                 throw new Error('Falha na requisição. Código de status: ' + response.status);
             }
@@ -40,12 +37,10 @@ export const Autores = () => {
     return(
         <>
             <Head>
-                <meta name="referrer" referrerPolicy="no-referrer" />
                 <title>Embrapa</title>
             </Head>
             
             {/* Código Navbar Offcanvas */}
-            <div className="container-autors">
             <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top" aria-label="Offcanvas navbar large">
                 <div className="container-fluid">
                     <div className="d-flex align-items-center"> 
@@ -64,7 +59,7 @@ export const Autores = () => {
                                 <input
                                     className="form-control border-0 rounded-pill pr-5"
                                     type="search"
-                                    placeholder="Buscar"
+                                    placeholder="Search"
                                     aria-label="Search"
                                 />
                                 <div className="input-group-append">
@@ -83,7 +78,7 @@ export const Autores = () => {
                                 {/* Logo IF / Embrapa Dentro do Menu */}
                                 <li className="nav-item">
                                     <Link href="/home">
-                                        <Image src={LogoIFEmbrapa} className='img-navbar-menu me-3' width="100%" height={46} alt="logo Embrapa com letras em azul com um simbolo verde, sendo que as letras em cima do simbolo são brancas" priority/>
+                                        <Image src={LogoIFEmbrapa} className='me-3' width="100%" height={46} alt="logo Embrapa com letras em azul com um simbolo verde, sendo que as letras em cima do simbolo são brancas" priority/>
                                     </Link>
                                 </li>
                             </ul>
@@ -94,12 +89,12 @@ export const Autores = () => {
                             <ul className="navbar-nav justify-content-end flex-grow-1 center-itens">
                                 <li className="nav-item">
                                     <Link className="nav-link back-item-link" href="/edicao-completa" aria-current="page">
-                                        <span className="link-text">Edição Completa</span>
+                                        Edição Completa
                                     </Link>     
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link back-item-link" href="/autores" aria-current="page">
-                                        <span className="link-text">Autores</span>
+                                        Autores
                                     </Link>
                                 </li>
                             </ul>
@@ -109,7 +104,7 @@ export const Autores = () => {
                                     <input
                                         className="form-control border-0 rounded-pill pr-5"
                                         type="search"
-                                        placeholder="Buscar"
+                                        placeholder="Search"
                                         aria-label="Search"
                                     />
                                     <div className="input-group-append">
@@ -121,10 +116,10 @@ export const Autores = () => {
                             </form>
                             <ul className="navbar-nav d-flex links-logo flex-row">
                                 <li className="nav-item second-logo-inst">
-                                    <Image src={LogoIF} className='logotipo' width={130} height={35} alt="Logotiopo do IFMS Campus Dourados" priority/>
+                                    <Image src={LogoIF} className='logotipo me-3' width="100%" height={32} alt="Logotiopo do IFMS Campus Dourados" priority/>
                                 </li>
                                 <li className="nav-item second-logo-inst">
-                                    <Image src={LogoEmbrapa} className='logotipo' width={70} height={48} alt="Logotiopo da Embrapa" priority/>
+                                    <Image src={LogoEmbrapa} className='logotipo' width="100%" height={48} alt="Logotiopo da Embrapa" priority/>
                                 </li>
                             </ul>
                         </div>
@@ -141,61 +136,35 @@ export const Autores = () => {
                 <div className="main-container-cards container-cards">
                 {/* Puxando os Dados do Fetch */}
                 {data.length > 0 ? (
-                    data.map((item) => {
-                        // Fazer o parse da propriedade description que está em JSON
-                        const descriptionData = JSON.parse(item.attributes.description);
-
-                        // Obter a URL da imagem
-                        const imageUrl = descriptionData.blocks[0].data.file.url;
-
-                        // Obter a descrição
-                        const description = descriptionData.blocks.find(block => block.type === 'paragraph')?.data?.text || 'Descrição não disponível';
-
-                        // Obter a URL
-                        const lattesLinkBlock = descriptionData.blocks.find(
-                            (block) => block.type === 'paragraph' && block.data.text.includes('Currículo Lattes')
-                        );
-
-                        let lattesUrl = '';
-                            if (lattesLinkBlock) {
-                            const linkRegex = /href="([^"]+)"/; // Regex para extrair o valor do atributo href
-                            const match = lattesLinkBlock.data.text.match(linkRegex);
-                            if (match && match[1]) {
-                                lattesUrl = match[1];
-                            }
-                        }
-
-                        return (
-                        <div key={item.id} className="card">
-                            <div className="containerAutor_v1t1">
+                    data.map((item) => (
+                    <div key={item.id} className="card">
+                        <div className="containerAutor_v1t1">
                             {/* Imagem dos Autores */}
-                                <div className="containerFoto_oz_I">
-                                    <img src={imageUrl} alt="Foto dos Autores" width="100%" />
-                                </div>
-                                {/* Nome dos Autores */}
-                                <p className="bold nome-autor">{item.attributes.name}</p>
+                            <div className="containerFoto_oz_I">
+                                <img src={`http://localhost:1337${item.attributes?.image?.data?.attributes?.url}`} alt="Foto dos Autores" width="100%"/>
                             </div>
-                            {/* Descrição dos Autores */}
-                            <div className="cardContainer_HEVx">
-                                <p className="descricao-autor">{description}</p>
-                            </div>
-                            {/* Link para o Currículo dos Autores */}
-                            <div className="action-card">
-                                <a target="_blank" href={lattesUrl}>Currículo Lattes</a>
-                            </div>
+                            {/* Nome dos Autores */}
+                            <p className="bold nome-autor">{item.attributes.name}</p>
                         </div>
-                        );
-                    })
+                        {/* Descrição dos Autores */}
+                        <div className="cardContainer_HEVx">
+                            <p className="descricao-autor">{item.attributes.description}</p>
+                        </div>
+                        {/* Link para o Currículo dos Autores */}
+                        <div className="action-card">
+                            <Link target="_blank" href={item.attributes.url}>Currículo Lattes</Link>
+                        </div>
+                    </div>
+                    ))
                     ) : (
-                    <p>Carregando dados...</p>
+                        <p>Carregando dados...</p>
                     )}
                 </div>
-            </div>
             </div>
 
             {/* Código Footer Embrapa */}    
             <footer>
-                <div className="container container-footer bottom-0 end-0">
+                <div className="container container-footer">
                     <div className="title-footer">
                         <p>Embrapa Agropecuária Oeste</p>
                     </div>

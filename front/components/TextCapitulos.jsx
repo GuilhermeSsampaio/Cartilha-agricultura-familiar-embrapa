@@ -45,8 +45,8 @@ const TextCapitulos = ({ lista, activeTitle, setActiveTitle }) => {
           break;
         case 'image':
           // Use a URL do Cloudinary fornecida no bloco de dados
-          const imageSrc = block.data.file.url;
-          const imageCaption = block.data.caption;
+          // const imageSrc = block.data.file.url;
+          // const imageCaption = block.data.caption;
 
           // Crie o elemento de imagem com a URL do Cloudinary
           htmlContent += `<img src="${imageSrc}" alt="${imageCaption}" />`;
