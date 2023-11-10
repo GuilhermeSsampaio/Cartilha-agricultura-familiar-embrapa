@@ -12,6 +12,19 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data # Mapeia o diretório de dados do PostgreSQL
 
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - ./minio-data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+
   strapi:
     build:
       context: ./back
@@ -20,6 +33,7 @@ services:
       - "1337:1337"
     depends_on:
       - banco
+      - minio
     volumes:
       - ./data/strapi:/srv/app
 
@@ -32,4 +46,3 @@ services:
       - "3000:3000"
     depends_on:
       - strapi
-
