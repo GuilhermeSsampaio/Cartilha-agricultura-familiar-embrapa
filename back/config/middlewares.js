@@ -6,10 +6,7 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com', "http://127.0.0.1:9001/browser/strapi/",
-            "http://127.0.0.1:9001/strapi/upload/",
-            "http://localhost:9000", "dl.airtable.com",
-          ],
+          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com', 'http://minio:9000'],
           "frame-src": [
             "'self'",
             "youtube.com",
@@ -28,10 +25,8 @@ module.exports = [
             "strapi.io",
             "s3.amazonaws.com",
             "cdn.jsdelivr.net",
-            "http://127.0.0.1:9001/browser/strapi/",
-            "http://127.0.0.1:9001/strapi/upload/",
-            "http://localhost:9000",
-            "dl.airtable.com",
+            'http://minio:9000',
+
           ],
           "style-src": ["'self'", "'unsafe-inline'"],
           "script-src": [
