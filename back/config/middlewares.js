@@ -6,7 +6,8 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com', 'http://minio:9000'],
+          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com', 'http://minio:9000', 'localhost:9000',
+          'http://192.168.15.116:9000', 'http://minioip:9000'],
           "frame-src": [
             "'self'",
             "youtube.com",
@@ -26,6 +27,9 @@ module.exports = [
             "s3.amazonaws.com",
             "cdn.jsdelivr.net",
             'http://minio:9000',
+            'localhost:9000',
+            'http://192.168.15.116:9000',
+            'http://minioip:9000'
 
           ],
           "style-src": ["'self'", "'unsafe-inline'"],

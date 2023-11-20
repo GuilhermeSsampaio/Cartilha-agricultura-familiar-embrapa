@@ -1,4 +1,5 @@
 version: '3.1'
+
 services:
   banco:
     image: postgres:latest
@@ -11,21 +12,27 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data # Mapeia o diretório de dados do PostgreSQL
+    networks:
+      - local_network
 
   minio:
     image: minio/minio
     container_name: minio
-    # hostname: images
-
     environment:
       - MINIO_ROOT_USER=minioadmin
       - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_BROWSER=on
+      - MINIO_OPTS=CORS_ALLOWED_HEADERS=x-requested-with,authorization,Content-Type,Accept,Origin
+      - MINIO_OPTS=CORS_ALLOWED_METHODS=GET,PUT,POST,DELETE
+      - MINIO_OPTS=CORS_ALLOWED_ORIGINS=http://localhost:1337
     volumes:
       - ./minio-data:/data
     ports:
       - "9000:9000"
       - "9001:9001"
     command: server /data --console-address ":9001"
+    networks:
+      - local_network
 
   strapi:
     build:
@@ -38,6 +45,8 @@ services:
       - minio
     volumes:
       - ./data/strapi:/srv/app
+    networks:
+      - local_network
 
   nextjs:
     build:
@@ -48,3 +57,8 @@ services:
       - "3000:3000"
     depends_on:
       - strapi
+    networks:
+      - local_network
+
+networks:
+  local_network:
