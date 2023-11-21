@@ -47,6 +47,8 @@ services:
       - ./data/strapi:/srv/app
     networks:
       - local_network
+    command: start --path /cartilha/strapi
+
 
   nextjs:
     build:
@@ -57,6 +59,20 @@ services:
       - "3000:3000"
     depends_on:
       - strapi
+    networks:
+      - local_network
+      
+  nginx:
+    image: nginx:latest
+    container_name: meu-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - strapi
+      - minio
+      - nextjs
     networks:
       - local_network
 
