@@ -43,12 +43,21 @@ const TextCapitulos = ({ lista, activeTitle, setActiveTitle }) => {
           });
           htmlContent += `<${listType} class="lista">${listItemsHTML}</${listType}>`;
           break;
-        case 'image':
-          // Use a URL do Cloudinary fornecida no bloco de dados
-          // const imageSrc = block.data.file.url;
-          // const imageCaption = block.data.caption;
+        // case 'image':
+        //   // Use a URL do Cloudinary fornecida no bloco de dados
+        //   const imageSrc = block.data.file.url;
+        //   const imageCaption = block.data.caption;
 
-          // Crie o elemento de imagem com a URL do Cloudinary
+        //   // Crie o elemento de imagem com a URL do Cloudinary
+        //   htmlContent += `<img src="${imageSrc}" alt="${imageCaption}" />`;
+        //   htmlContent += `<p class="legenda-img">${imageCaption}</p>`;
+        //   break;
+        case 'image':
+          // Lógica para lidar com blocos de tipo 'image'
+          const imageSrc = block.data.file.url;
+          const imageCaption = block.data.caption;
+    
+          // Crie o elemento de imagem com a URL fornecida no bloco de dados
           htmlContent += `<img src="${imageSrc}" alt="${imageCaption}" />`;
           htmlContent += `<p class="legenda-img">${imageCaption}</p>`;
           break;
