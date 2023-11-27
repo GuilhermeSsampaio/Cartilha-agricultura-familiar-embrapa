@@ -34,22 +34,90 @@ export const Autores = () => {
         }
     };
 
-    return(
+    function convertToHTML(data) {
+        let htmlContent = ''; // Variável para armazenar o conteúdo HTML
+
+        data.blocks.forEach((block) => {
+            switch (block.type) {
+                case 'header':
+                    const anchor = block.data.text.replace(/ /g, "_"); // Criar âncora
+                    htmlContent += `<h${block.data.level} class="titulo" id='${anchor}'>${block.data.text}</h${block.data.level}>`;
+                    break;
+                case 'paragraph':
+
+                    // Se não estivermos no bloco de instituição, adicione o conteúdo normal com a classe "paragrafo"
+                    htmlContent += `<p class="paragrafo">${block.data.text}</p>`;
+                    break;
+                case 'list':
+                    const listType = block.data.style === 'ordered' ? 'ol' : 'ul';
+                    let listItemsHTML = '';
+                    block.data.items.forEach((item) => {
+                        listItemsHTML += `<li>${item}</li>`;
+                    });
+                    htmlContent += `<${listType} class="lista">${listItemsHTML}</${listType}>`;
+                    break;
+                // case 'image':
+                //   // Use a URL do Cloudinary fornecida no bloco de dados
+                //   const imageSrc = block.data.file.url;
+                //   const imageCaption = block.data.caption;
+
+                //   // Crie o elemento de imagem com a URL do Cloudinary
+                //   htmlContent += `<img src="${imageSrc}" alt="${imageCaption}" />`;
+                //   htmlContent += `<p class="legenda-img">${imageCaption}</p>`;
+                //   break;
+                case 'image':
+                    // Lógica para lidar com blocos de tipo 'image'
+                    const imageSrc = block.data.file.url;
+                    const imageCaption = block.data.caption;
+
+                    // Crie o elemento de imagem com a URL fornecida no bloco de dados
+                    htmlContent += `<img src="${imageSrc}" alt="${imageCaption}" />`;
+                    htmlContent += `<p class="legenda-img">${imageCaption}</p>`;
+                    break;
+                case 'embed':
+                    const videoUrl = new URL(block.data.source);
+                    const videoId = videoUrl.pathname.substring(1); // Remove a barra inicial
+                    const videoCaption = block.data.caption;
+                    const videoEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    htmlContent +=
+                        ` <div id="player">
+                        <div class="html5-video-player">
+                          <iframe
+                            width="100%"
+                            height="315"
+                            src=${videoEmbedUrl}
+                            frameBorder="0"
+                            allowFullscreen
+                          >
+                          </iframe>
+                        </div>
+                      </div>`
+                    break;
+                // Adicione outros casos para outros tipos de blocos do Editor.js, se necessário.
+                default:
+                    // const anchor1 = block.data.text.replace(/ /g, "_"); // Criar âncora
+                    // htmlContent += `<h${block.data.level} class="titulo" id='${anchor}'>${block.data.text}</h${block.data.level}>`;
+                    break;
+            }
+        });
+        return htmlContent;
+    }
+    return (
         <>
             <Head>
                 <title>Embrapa</title>
             </Head>
-            
+
             {/* Código Navbar Offcanvas */}
             <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top" aria-label="Offcanvas navbar large">
                 <div className="container-fluid">
-                    <div className="d-flex align-items-center"> 
+                    <div className="d-flex align-items-center">
                         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
                             <i className="fas fa-bars"></i>
                         </button>
                         {/* Logo Navbar */}
                         <Link className="navbar-brand" href="/home">
-                            <Image src={Logo} width={350} height={54} alt="logo Embrapa com letras em azul com um simbolo verde, sendo que as letras em cima do simbolo são brancas"/>
+                            <Image src={Logo} width={350} height={54} alt="logo Embrapa com letras em azul com um simbolo verde, sendo que as letras em cima do simbolo são brancas" />
                         </Link>
                     </div>
                     {/* Input Search para tela menor que 992px */}
@@ -78,7 +146,7 @@ export const Autores = () => {
                                 {/* Logo IF / Embrapa Dentro do Menu */}
                                 <li className="nav-item">
                                     <Link href="/home">
-                                        <Image src={LogoIFEmbrapa} className='me-3' width="100%" height={46} alt="logo Embrapa com letras em azul com um simbolo verde, sendo que as letras em cima do simbolo são brancas" priority/>
+                                        <Image src={LogoIFEmbrapa} className='me-3' width="100%" height={46} alt="logo Embrapa com letras em azul com um simbolo verde, sendo que as letras em cima do simbolo são brancas" priority />
                                     </Link>
                                 </li>
                             </ul>
@@ -90,7 +158,7 @@ export const Autores = () => {
                                 <li className="nav-item">
                                     <Link className="nav-link back-item-link" href="/edicao-completa" aria-current="page">
                                         Edição Completa
-                                    </Link>     
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link back-item-link" href="/autores" aria-current="page">
@@ -116,10 +184,10 @@ export const Autores = () => {
                             </form>
                             <ul className="navbar-nav d-flex links-logo flex-row">
                                 <li className="nav-item second-logo-inst">
-                                    <Image src={LogoIF} className='logotipo me-3' width="100%" height={32} alt="Logotiopo do IFMS Campus Dourados" priority/>
+                                    <Image src={LogoIF} className='logotipo me-3' width="100%" height={32} alt="Logotiopo do IFMS Campus Dourados" priority />
                                 </li>
                                 <li className="nav-item second-logo-inst">
-                                    <Image src={LogoEmbrapa} className='logotipo' width="100%" height={48} alt="Logotiopo da Embrapa" priority/>
+                                    <Image src={LogoEmbrapa} className='logotipo' width="100%" height={48} alt="Logotiopo da Embrapa" priority />
                                 </li>
                             </ul>
                         </div>
@@ -134,35 +202,62 @@ export const Autores = () => {
                 </div>
                 {/* Código dos Card dos Autores */}
                 <div className="main-container-cards container-cards">
-                {/* Puxando os Dados do Fetch */}
-                {data.length > 0 ? (
-                    data.map((item) => (
-                    <div key={item.id} className="card">
-                        <div className="containerAutor_v1t1">
-                            {/* Imagem dos Autores */}
-                            <div className="containerFoto_oz_I">
-                                <img src={`http://localhost:1337${item.attributes?.image?.data?.attributes?.url}`} alt="Foto dos Autores" width="100%"/>
-                            </div>
-                            {/* Nome dos Autores */}
-                            <p className="bold nome-autor">{item.attributes.name}</p>
-                        </div>
-                        {/* Descrição dos Autores */}
-                        <div className="cardContainer_HEVx">
-                            <p className="descricao-autor">{item.attributes.description}</p>
-                        </div>
-                        {/* Link para o Currículo dos Autores */}
-                        <div className="action-card">
-                            <Link target="_blank" href={item.attributes.url}>Currículo Lattes</Link>
-                        </div>
-                    </div>
-                    ))
+                    {/* Puxando os Dados do Fetch */}
+                    {data.length > 0 ? (
+                        data.map((item) => {
+                            // Parse da string de descrição para objeto JSON
+                            const descriptionData = JSON.parse(item.attributes.description);
+
+                            return (
+                                <div key={item.id} className="card">
+                                    <div className="containerAutor_v1t1">
+                                        {/* Imagem dos Autores */}
+                                        <div className="containerFoto_oz_I">
+                                            <img
+                                                src={`${descriptionData.blocks[0].data.file.url}`}
+                                                alt="Foto dos Autores"
+                                                width="100%"
+                                            />
+                                        </div>
+                                        {/* Nome dos Autores */}
+                                        <p className="bold nome-autor">{item.attributes.name}</p>
+                                    </div>
+                                    {/* Descrição dos Autores */}
+                                    <div className="cardContainer_HEVx">
+                                        <p className="descricao-autor">{descriptionData.blocks[1].data.text}</p>
+                                    </div>
+                                    {/* Link para o Currículo dos Autores */}
+                                    <div className="action-card">
+                                        {/* Extrai a tag <a> da string JSON e renderiza como HTML */}
+                                        {descriptionData.blocks.map((block) => {
+                                            if (block.type === 'paragraph') {
+                                                // Verifica se há uma tag <a> dentro do bloco de parágrafo
+                                                const match = block.data.text.match(/<a[^>]*>.*?<\/a>/);
+                                                if (match) {
+                                                    return (
+                                                        <div key={block.id} dangerouslySetInnerHTML={{ __html: match[0] }} />
+                                                    );
+                                                } else {
+                                                    return (
+                                                        null
+                                                    );
+                                                }
+                                            }
+                                            return null;
+                                        })}
+                                    </div>
+
+                                </div>
+                            );
+                        })
                     ) : (
                         <p>Carregando dados...</p>
                     )}
+
                 </div>
             </div>
 
-            {/* Código Footer Embrapa */}    
+            {/* Código Footer Embrapa */}
             <footer>
                 <div className="container container-footer">
                     <div className="title-footer">
@@ -173,7 +268,7 @@ export const Autores = () => {
                         <p>Fone: + 55 (67) 3416-9700</p>
                     </div>
                 </div>
-            </footer>   
+            </footer>
         </>
     );
 };
