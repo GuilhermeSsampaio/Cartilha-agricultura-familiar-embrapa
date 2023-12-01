@@ -104,7 +104,7 @@ export const Capitulos = () => {
     }, [query.activeChapter]);
 
     const CarregaCapitulos = async () => {
-        const url = 'http://localhost:1337/api/capitulos?populate=*';
+        const url = 'http://www.cartilha-dev.com.br:1337/api/capitulos?populate=*';
         try {
             const response = await fetch(url);
             if (response.ok) {

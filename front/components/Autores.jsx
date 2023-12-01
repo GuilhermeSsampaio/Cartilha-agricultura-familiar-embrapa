@@ -18,7 +18,7 @@ export const Autores = () => {
     }, []);
 
     const CarregaAutores = async () => {
-        const url = 'http://localhost:1337/api/autors?populate=*';
+        const url = 'http://www.cartilha-dev.com.br:1337/api/autors?populate=*';
         try {
             const response = await fetch(url);
             if (response.ok) {
