@@ -1,5 +1,5 @@
 module.exports = ({env}) => ({
-  upload: {
+  upload: {//provedor de imagens - minio
     config: {
       provider: 'strapi-provider-upload-minio-ce',
       providerOptions: {
@@ -15,7 +15,7 @@ module.exports = ({env}) => ({
       },
     },
   },
-  email: {
+  email: {//provedor de email - sendgrid
     config: {
       provider: 'sendgrid',
       providerOptions: {

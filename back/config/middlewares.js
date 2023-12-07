@@ -1,3 +1,4 @@
+//políticas de privacidades
 module.exports = [
   "strapi::errors",
   {
@@ -6,7 +7,7 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com', 'http://minio:9000', 'localhost:9000',
+          'media-src': ["'self'", 'data:', 'blob:', 'http://minio:9000', 'localhost:9000',
           'http://192.168.15.116:9000', 'http://minioip:9000'],
           "frame-src": [
             "'self'",
@@ -17,7 +18,7 @@ module.exports = [
             "facebook.com",
             "www.facebook.com",
           ],
-          "connect-src": ["'self'", "https:", "blob:", "*.strapi.io", 'data:', 'res.cloudinary.com'],
+          "connect-src": ["'self'", "https:", "blob:", "*.strapi.io", 'data:'],
           "img-src": [
             "'self'",
             "data:",

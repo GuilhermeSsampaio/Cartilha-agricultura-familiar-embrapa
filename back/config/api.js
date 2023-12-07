@@ -1,3 +1,4 @@
+//nativo do strapi
 module.exports = {
   rest: {
     defaultLimit: 25,

@@ -1,3 +1,4 @@
+//conexão com o banco
 module.exports = ({env}) => ({
   connection:{
     client: 'postgres',
