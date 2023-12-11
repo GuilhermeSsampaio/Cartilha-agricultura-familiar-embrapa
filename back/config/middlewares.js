@@ -1,7 +1,6 @@
 //políticas de privacidades
 module.exports = [
   "strapi::errors",
-  // { resolve: './src/middlewares/admin-redirect' },
   {
     name: "strapi::security",
     config: {
@@ -9,7 +8,7 @@ module.exports = [
         useDefaults: true,
         directives: {
           'media-src': ["'self'", 'data:', 'blob:', 'http://minio:9000', 'localhost:9000',
-          'http://192.168.15.116:9000', 'http://minioip:9000'],
+          'http://192.168.15.116:9000', 'http://minioip:9000', 'http://www.cartilha-dev.com.br:9000'],
           "frame-src": [
             "'self'",
             "youtube.com",
@@ -31,7 +30,8 @@ module.exports = [
             'http://minio:9000',
             'localhost:9000',
             'http://192.168.15.116:9000',
-            'http://minioip:9000'
+            'http://minioip:9000',
+            'http://www.cartilha-dev.com.br:9000'
 
           ],
           "style-src": ["'self'", "'unsafe-inline'"],
