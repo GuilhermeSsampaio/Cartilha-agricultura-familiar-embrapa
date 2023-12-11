@@ -1,6 +1,7 @@
 //políticas de privacidades
 module.exports = [
   "strapi::errors",
+  // { resolve: './src/middlewares/admin-redirect' },
   {
     name: "strapi::security",
     config: {
